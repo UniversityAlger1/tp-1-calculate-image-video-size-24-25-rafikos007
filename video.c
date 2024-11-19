@@ -1,27 +1,33 @@
+#include <string.h>
+
 float video(int w, int h, int durationMovie, int durationCredits, int fps, char* unit) {
+    if (unit == NULL) {
+        return 0; // Return 0 if unit is NULL
+    }
 
-    // Size of the colored movie
+    // Calculate total frames
+    long long totalFramesMovie = (long long)durationMovie * fps;
+    long long totalFramesCredits = (long long)durationCredits * fps;
 
-    int totalFramesMovie = durationMovie * fps;
-    int totalFramesCredits = durationCredits * fps;
-    int totalPixels1 = w * h * 3;
-    int totalPixels2 = w * h ;
-    int movieSizeBytes = totalFramesMovie * totalPixels1  ; 
-    int creditsSizeBytes = totalFramesCredits * totalPixels2 ; 
-    int totalSize = movieSizeBytes + creditsSizeBytes ;
+    // Calculate size for colored movie and black-and-white credits
+       // 1 byte for grayscale
 
-    // Convertion
-    float size;
+    long long movieSizeBytes = totalFramesMovie * (long long)w * h * 3;
+    long long creditsSizeBytes = totalFramesCredits * (long long)w * h ;
+    long long totalSize = movieSizeBytes + creditsSizeBytes;
+
+    // Convert size to the requested unit
+    float size = 0.0f;
     if (strcmp(unit, "bt") == 0) {
-        size = totalSize;
+        size = (float)totalSize; // Size in bytes
     } else if (strcmp(unit, "ko") == 0) {
-        size = totalSize / 1024.0f; // 1 KB = 1024 bytes
+        size = totalSize / 1024.0f; // Size in kilobytes
     } else if (strcmp(unit, "mo") == 0) {
-        size = totalSize / (1024.0f * 1024.0f); // 1 MB = 1024 KB
+        size = totalSize / (1024.0f * 1024.0f); // Size in megabytes
     } else if (strcmp(unit, "go") == 0) {
-        size = totalSize / (1024.0f * 1024.0f * 1024.0f); // 1 GB = 1024 MB
+        size = totalSize / (1024.0f * 1024.0f * 1024.0f); // Size in gigabytes
     } else {
-        return 0; 
+        return 0; // Invalid unit
     }
 
     return size;
