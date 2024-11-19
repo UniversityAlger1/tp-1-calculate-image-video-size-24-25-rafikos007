@@ -22,5 +22,5 @@ float video(int w, int h, int durationMovie, int durationCredits, int fps, char*
         return 0; 
     }
 
-    return 0gi;
+    return 0;
 }
