@@ -21,12 +21,19 @@ float video(int w, int h, int durationMovie, int durationCredits, int fps, char*
 
     // Convert size 
     
-    if (strcmp(unit, "bt") == 0) return coloredVideoSize;                  
-    if (strcmp(unit, "ko") == 0) return coloredVideoSize / 1024.0;             
-    if (strcmp(unit, "mo") == 0) return coloredVideoSize / (1024.0 * 1024);    
-    if (strcmp(unit, "go") == 0) return coloredVideoSize / (1024.0 * 1024 * 1024);
+   if (strcmp(unit, "bt") == 0) {
+    return coloredVideoSize; 
+} else if (strcmp(unit, "ko") == 0) {
+    return (8 * coloredVideoSize / 1024.0); 
+} else if (strcmp(unit, "mo") == 0) {
+    return (8 * coloredVideoSize / (1024.0 * 1024)); 
+} else if (strcmp(unit, "go") == 0) {
+    return (8 * coloredVideoSize / (1024.0 * 1024 * 1024)); 
+} else {
+    return -1.0f; // Invalid unit
+}
 
     // YOUR CODE HERE - END
 
-    return 0;
+    
 }
